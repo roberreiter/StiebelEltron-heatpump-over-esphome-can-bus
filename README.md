@@ -6,6 +6,9 @@ Eventually you have to change the CAN-id of the esphome device, if you get no re
 Some users reported that the CAN-id 680 didn't work for them.
 Also some users reported from different baud-rates.
 Change them in the section, where you configure the canbus + change the gloabal variable internalResponse_id respectively.
+You will further have to change all values that correspond to 0x680 and the can-id 680
+
 
 For the address of the heat pump, change the variables PumpCANread_id and PumpCANwrite_id.
 For the address of the FEK, change the variable FekCANread_id
+
