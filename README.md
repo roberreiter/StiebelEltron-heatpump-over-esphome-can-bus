@@ -37,7 +37,7 @@ Changing a value in the input_text will directly generate a change of the value 
 You can verify it on your heat-pump's display.
 My esphome-config has a filter included that only accepts values that are > 250 and < 600.
 
-You can e.g. use this to change the comfort-temperature when there is enough energy-production from my photovoltaic module. You can leave the eco-temperature constantly low for generating no warm water at night, when there is no sunlight.
+You can e.g. use this to change the comfort-temperature when there is enough energy-production from your photovoltaic module. You can leave the eco-temperature constantly low for generating no warm water at night, when there is no sunlight.
 
 
 #
