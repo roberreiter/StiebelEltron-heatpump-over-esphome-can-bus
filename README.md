@@ -16,9 +16,11 @@ For the address of the FEK, change the variable FekCANread_id
 To send individual CAN-messages from Homeassistant there is an implementation in my code, where you have to add some sensors and a script in Home-Assistant.
 This is more likely for experimental use, but it can help to find useful messages from your heatpump.
 Be aware, that you can also change values on your heatpump with this function!
-#############################################################################################################################################################
-Add the following sensors to your config.yaml, to create input-textfields:
+
+
 ############################################################################################################################################################
+Add the following sensors to your config.yaml, to create input-textfields:
+
 
 input_text:
 
@@ -41,11 +43,12 @@ input_text:
     max: 4
     pattern: "[a-fA-F0-9]*"
 
-#########################################################
+#############################################################################################################################
 Add the following script to you scripts.yaml-file.
 The script reads the values from the input-text, converts the values into integer-values and forwards them to the ESPhome sensor
 When you run the script, the values are read from your esphome-device and forwarded to your can-bus.
-#########################################################
+
+
 sequence:
   - service: esphome.<your_esphome_device_name>
     data:
@@ -57,9 +60,10 @@ icon: mdi:play
 max: 5
 alias: send CAN-message to ESP-home
 
-##########################################################
+#############################################################################################################################
 Create a button for the script in your Lovelace interface
-###########################################################
+
+#############################################################################################################################
 To use send an individual CAN-message, insert the hex-values for address in h_addr.
 e.g. 3100 to receive a value or 3000 to change a value on your heat-pump with address 0x180. Change the address to your individual need.
 
