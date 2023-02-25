@@ -31,9 +31,9 @@ input_text:
 
 
 #
-Insert a value in 1/10 degrees Celsius.
+Insert a value in 1/10 degrees Celsius in the home-assistant input_text fields.
 e.g. to set the comfort-temperature of your heat-pump to 55°C, set the value to 550
-Changing a value in the input_text will directly generate a change the value on your heat-pump.
+Changing a value in the input_text will directly generate a change of the value on your heat-pump.
 You can verify it on your heat-pump's display.
 My esphome-config has a filter included that only accepts values that are > 250 and < 600.
 
