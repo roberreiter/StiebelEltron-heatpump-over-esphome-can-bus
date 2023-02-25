@@ -35,7 +35,9 @@ Insert a value in 1/10 degrees Celsius.
 e.g. to set the comfort-temperature of your heat-pump to 55°C, set the value to 550
 Changing a value in the input_text will directly generate a change the value on your heat-pump.
 You can verify it on your heat-pump's display.
-I personally change my comfort-temperature when there is enough energy-production from my photovoltaic module and leave the eco-temperature constantly low.
+My esphome-config has a filter included that only accepts values that are > 250 and < 600.
+
+You can e.g. use this to change the comfort-temperature when there is enough energy-production from my photovoltaic module. You can leave the eco-temperature constantly low for generating no warm water at night, when there is no sunlight.
 
 
 #
