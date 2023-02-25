@@ -12,13 +12,13 @@ You will further have to change all values that correspond to 0x680 and the can-
 For the address of the heat pump, change the variables PumpCANread_id and PumpCANwrite_id.
 For the address of the FEK, change the variable FekCANread_id
 
-#############################################################################################################################################################
+#
 To send individual CAN-messages from Homeassistant there is an implementation in my code, where you have to add some sensors and a script in Home-Assistant.
 This is more likely for experimental use, but it can help to find useful messages from your heatpump.
 Be aware, that you can also change values on your heatpump with this function!
 
 
-############################################################################################################################################################
+#
 Add the following sensors to your config.yaml, to create input-textfields:
 
 
@@ -43,7 +43,7 @@ input_text:
     max: 4
     pattern: "[a-fA-F0-9]*"
 
-#############################################################################################################################
+#
 Add the following script to you scripts.yaml-file.
 The script reads the values from the input-text, converts the values into integer-values and forwards them to the ESPhome sensor.
 This is to prepare the can-message for forwarding it to the CAN-bus. The script itself does not forward a value to the bus.
@@ -61,10 +61,10 @@ icon: mdi:play
 max: 5
 alias: send CAN-message to ESP-home
 
-#############################################################################################################################
+#
 Create a button for the script in your Lovelace interface
 
-#############################################################################################################################
+#
 To send an individual CAN-message, insert the hex-values for address in h_addr.
 e.g. 3100 to receive a value or 3000 to change a value on your heat-pump with address 0x180. Change the address to your individual need.
 
@@ -78,7 +78,7 @@ Press the button "CAN-Befehl absetzen" that is provided by the esphome-device, t
 If you did everything correctly, the esphome-log will show an answer to your CAN-request.
 
 Other noteworthy addresses and their hex-values for the CAN-message
-#################################################################
+#
 #CAN ID 180: read - 3100, write - 3000
 #CAN ID 301: read - 0c01, FEK-device (no active can request, only listening)
 #
@@ -88,4 +88,4 @@ Other noteworthy addresses and their hex-values for the CAN-message
 #	480	read: 9100  write: 9000    WMPme Wärmepumpenmanager
 #	601	read: C101  write: C001
 #	680	confirmation: D200
-#################################################################
+#
