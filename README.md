@@ -65,7 +65,7 @@ alias: send CAN-message to ESP-home
 Create a button for the script in your Lovelace interface
 
 #############################################################################################################################
-To use send an individual CAN-message, insert the hex-values for address in h_addr.
+To send an individual CAN-message, insert the hex-values for address in h_addr.
 e.g. 3100 to receive a value or 3000 to change a value on your heat-pump with address 0x180. Change the address to your individual need.
 
 Insert the Elster-index of interest in h_idx. e.g. (000c for outside-temperature)
