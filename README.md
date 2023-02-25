@@ -22,14 +22,14 @@ Be aware, that you can also change values on your heatpump with this function!
 Add the following sensors to your config.yaml, to create input-textfields:
 
 
-#input_text:
-#
-#  h_addr:
-#    name: h_addr
-#    initial: "3100"
-#    min: 4
-#    max: 4
-#    pattern: "[a-fA-F0-9]*"
+input_text:
+
+  h_addr:
+    name: h_addr
+    initial: "3100"
+    min: 4
+    max: 4
+    pattern: "[a-fA-F0-9]*"
   h_idx:
     name: h_idx
     initial: "0000"
