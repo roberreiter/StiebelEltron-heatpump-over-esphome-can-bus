@@ -13,6 +13,33 @@ For the address of the heat pump, change the variables PumpCANread_id and PumpCA
 For the address of the FEK, change the variable FekCANread_id
 
 #
+To change the comfort-temperature and eco-temperature of your heat-pump via home-assistant, add the following sensors to your homeassistant config.yaml:
+
+input_text:
+
+  ww_komfort_temp:
+    name: Warmwassertemperatur Komfort 1/10°C
+    min: 3
+    max: 3
+    pattern: "[0-9]*"
+
+  ww_eco_temp:
+    name: Warmwassertemperatur Eco 1/10°C
+    min: 3
+    max: 3
+    pattern: "[0-9]*"
+
+
+#
+Insert a value in 1/10 degrees Celsius.
+e.g. to set the comfort-temperature of your heat-pump to 55°C, set the value to 550
+Changing a value in the input_text will directly generate a change the value on your heat-pump.
+You can verify it on your heat-pump's display.
+I personally change my comfort-temperature when there is enough energy-production from my photovoltaic module and leave the eco-temperature constantly low.
+
+
+#
+#
 To send individual CAN-messages from Homeassistant there is an implementation in my code, where you have to add some sensors and a script in Home-Assistant.
 This is more likely for experimental use, but it can help to find useful messages from your heatpump (as they sometimes vary from one device to the other).
 Be aware, that you can also change values on your heatpump with this function!
