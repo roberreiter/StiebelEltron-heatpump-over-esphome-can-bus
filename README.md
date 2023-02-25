@@ -16,6 +16,7 @@ For the address of the FEK, change the variable FekCANread_id
 To send individual CAN-messages from Homeassistant there is an implementation in my code, where you have to add some sensors and a script in Home-Assistant.
 This is more likely for experimental use, but it can help to find useful messages from your heatpump (as they sometimes vary from one device to the other).
 Be aware, that you can also change values on your heatpump with this function!
+Howto:
 
 
 #
