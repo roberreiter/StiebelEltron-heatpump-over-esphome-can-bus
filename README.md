@@ -12,13 +12,13 @@ You will further have to change all values that correspond to 0x680 and the can-
 For the address of the heat pump, change the variables PumpCANread_id and PumpCANwrite_id.
 For the address of the FEK, change the variable FekCANread_id
 
-###############################################################################
+#############################################################################################################################################################
 To send individual CAN-messages from Homeassistant there is an implementation in my code, where you have to add some sensors and a script in Home-Assistant.
 This is more likely for experimental use, but it can help to find useful messages from your heatpump.
 Be aware, that you can also change values on your heatpump with this function!
-###########################################################################
+#############################################################################################################################################################
 Add the following sensors to your config.yaml, to create input-textfields:
-###########################################################################
+############################################################################################################################################################
 
 input_text:
 
