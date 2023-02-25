@@ -20,7 +20,7 @@ Howto:
 
 
 #
-Add the following sensors to your config.yaml, to create input-textfields:
+Add the following sensors to your homeassistant config.yaml, to create input-textfields:
 
 
 input_text:
@@ -45,7 +45,7 @@ input_text:
     pattern: "[a-fA-F0-9]*"
 
 #
-Add the following script to you scripts.yaml-file.
+Add the following script to you homeassistant scripts.yaml-file.
 The script reads the values from the input-text, converts the values into integer-values and forwards them to the ESPhome sensor.
 This is to prepare the can-message for forwarding it to the CAN-bus. The script itself does not forward a value to the bus.
 It is just generating the message in integer. The sending-part is initiated using the buttons on the esphome-device.
