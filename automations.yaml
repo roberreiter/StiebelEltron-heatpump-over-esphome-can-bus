@@ -1,0 +1,192 @@
+alias: A_WW_Aufbereitung
+description: Warmwasseraufbereitung je nach PV-Strom
+trigger:
+  - platform: numeric_state
+    entity_id: sensor.power_real_fronius_meter_0_192_168_1_16
+    for:
+      hours: 0
+      minutes: 4
+      seconds: 0
+    below: -2300
+    id: ausreichend_PVStrom
+  - platform: numeric_state
+    entity_id: sensor.power_real_fronius_meter_0_192_168_1_16
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 10
+    above: 0
+    id: zu_wenig_PVStrom
+  - platform: numeric_state
+    entity_id: sensor.wt_dammerung_lx
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+    below: 20
+    id: Sonnenuntergang
+  - platform: template
+    value_template: >-
+      {{ (now().timestamp())|float >=
+      as_timestamp(states("sensor.power_highest_peak_time_today"))|float}}
+    id: highest_estimated_peak_time_erreicht
+  - platform: template
+    value_template: >-
+      {{states("sensor.komfort_speicher_soll_temperatur")|float > 
+      states("sensor.speicher_ist_temperatur")|float+5}}
+    id: Komfortspeichertemperatur erhöht
+  - platform: numeric_state
+    entity_id: sensor.power_real_fronius_meter_0_192_168_1_16
+    below: -670
+    id: Heizkörperleistung frei
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+  - platform: time_pattern
+    minutes: "30"
+    id: tagsüber alle 30 Minuten
+  - platform: state
+    entity_id:
+      - switch.badheizkorper_1_og
+    from: "off"
+    to: "on"
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    id: Badheizkörper 1 ist an
+  - platform: template
+    value_template: >-
+      {{states('sensor.power_real_fronius_meter_0_192_168_1_16')|int-states('sensor.badheizkorper_2_og_leistung_w')|default(0)|int-states('sensor.badheizkorper_wirkleistung_w')|int|default(0)<-2300}}
+    id: genugPV-Strom mit Heizung AUS
+condition: []
+action:
+  - if:
+      - condition: and
+        conditions:
+          - condition: numeric_state
+            entity_id: sensor.komfort_speicher_soll_temperatur
+            below: 58
+          - condition: or
+            conditions:
+              - condition: trigger
+                id: ausreichend_PVStrom
+              - condition: trigger
+                id: genugPV-Strom mit Heizung AUS
+    then:
+      - service: input_text.set_value
+        data:
+          value: "{{states('sensor.komfort_speicher_soll_temperatur')|int*10+60}}"
+        target:
+          entity_id: input_text.ww_komfort_temp
+      - if:
+          - condition: trigger
+            id: genugPV-Strom mit Heizung AUS
+        then:
+          - service: switch.turn_off
+            data: {}
+            target:
+              entity_id:
+                - switch.badheizkorper_2_og
+                - switch.badheizkorper_1_og
+    else: []
+  - if:
+      - condition: trigger
+        id: highest_estimated_peak_time_erreicht
+      - condition: template
+        value_template: >
+          {{states("sensor.energy_production_today")|float >=
+          states("sensor.energy_production_tomorrow")|float*1.7}}
+      - condition: numeric_state
+        entity_id: sensor.komfort_speicher_soll_temperatur
+        below: 50
+    then:
+      - service: input_text.set_value
+        data:
+          value: "{{states('sensor.komfort_speicher_soll_temperatur')|int*10+100}}"
+        target:
+          entity_id: input_text.ww_komfort_temp
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id:
+            - switch.badheizkorper_1_og
+            - switch.badheizkorper_2_og
+      - delay:
+          hours: 0
+          minutes: 40
+          seconds: 0
+          milliseconds: 0
+  - if:
+      - condition: or
+        conditions:
+          - condition: trigger
+            id: Heizkörperleistung frei
+          - condition: trigger
+            id: Badheizkörper 1 ist an
+    then:
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id: switch.badheizkorper_1_og
+      - if:
+          - condition: state
+            entity_id: switch.badheizkorper_1_og
+            state: "on"
+            for:
+              hours: 0
+              minutes: 0
+              seconds: 20
+          - condition: numeric_state
+            entity_id: sensor.power_real_fronius_meter_0_192_168_1_16
+            below: -670
+        then:
+          - service: switch.turn_on
+            data: {}
+            target:
+              entity_id: switch.badheizkorper_2_og
+  - if:
+      - condition: trigger
+        id: zu_wenig_PVStrom
+    then:
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id:
+            - switch.badheizkorper_1_og
+            - switch.badheizkorper_2_og
+      - if:
+          - condition: template
+            value_template: >-
+              {{(states('sensor.speicher_ist_temperatur')|int*10<states('sensor.komfort_speicher_soll_temperatur')|int*10-20)
+              and states('sensor.komfort_speicher_soll_temperatur')|int*10>=380
+              and is_state("sun.sun", "above_horizon")}}
+        then:
+          - delay:
+              hours: 0
+              minutes: 10
+              seconds: 0
+              milliseconds: 0
+          - if:
+              - condition: numeric_state
+                entity_id: sensor.power_real_fronius_meter_0_192_168_1_16
+                above: 0
+            then:
+              - service: input_text.set_value
+                data:
+                  value: "{{states('sensor.speicher_ist_temperatur')|int*10}}"
+                target:
+                  entity_id: input_text.ww_komfort_temp
+  - if:
+      - condition: trigger
+        id: Sonnenuntergang
+    then:
+      - service: input_text.set_value
+        data:
+          value: "380"
+        target:
+          entity_id: input_text.ww_komfort_temp
+mode: queued
+trace:
+  stored_traces: 100
