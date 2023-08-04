@@ -103,9 +103,24 @@ Insert the Elster-index of interest in h_idx. e.g. (000c for outside-temperature
 Insert a value in h_val (if you want to change a value) or leave it as 0000 if you just want to receive a current value.
 Press the button "send CAN-message to ESP-home
 
+Two other buttons are created automatically within home assistant:
+"Befehl anzeigen / Sensorupdate"
+This is a button is created by the ESP-home device. If you followed my ESP-yaml, this button has the id “can_befehl_anzeigen”.
+You may have to let it show up in the home assistant lovely interface.
+
+- Stored CAN-messages are sent to update various sensors.
+- The message that was manually set in home assistant is showed in the log-output of the ESP-device
+- The manually set CAN-message will not be transmitted to the CAN-network
+
+"CAN-Befehl absetzen"
+This is a button created by the ESP-home device. If you followed my ESP-yaml, this button has the id “can_send”
+You may have to let it show up in the home assistant lovely interface.
+
+- The CAN-message that was set in home-assistant (after pushing button "send CAN-message to ESP-home") will be sent to the CAN-network.
+
 Press the button "Befehl anzeigen / Sensorupdate" that is provided by the esphome-device, to show up the CAN-message in the log.
 Press the button "CAN-Befehl absetzen" that is provided by the esphome-device, to send the CAN-message to the bus.
-If you did everything correctly, the esphome-log will show an answer to your CAN-request.
+If you did everything correctly, the esphome-log will show an answer to your CAN-request after pressing "send CAN-message to ESP-home" and then pressing "CAN-Befehl absetzen".
 
 Other noteworthy addresses and their hex-values for the CAN-message
 #
