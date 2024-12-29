@@ -123,14 +123,13 @@ Press the button "CAN-Befehl absetzen" that is provided by the esphome-device, t
 If you did everything correctly, the esphome-log will show an answer to your CAN-request after pressing "send CAN-message to ESP-home" and then pressing "CAN-Befehl absetzen".
 
 Other noteworthy addresses and their hex-values for the CAN-message
-#
-#CAN ID 180: read - 3100, write - 3000
-#CAN ID 301: read - 0c01, FEK-device (no active can request, only listening)
-#
-#other addresses
-#   180 read: 3100  write: 3000
-#  	301	read: 6101  write: 6001
-#	480	read: 9100  write: 9000    WMPme Wärmepumpenmanager
-#	601	read: C101  write: C001
-#	680	confirmation: D200
-#
+
+- CAN ID 180: read - 3100, write - 3000
+- CAN ID 301: read - 0c01, FEK-device (no active can request, only listening)
+
+other addresses
+- 180 read: 3100  write: 3000
+- 301	read: 6101  write: 6001
+-	480	read: 9100  write: 9000    WMPme Wärmepumpenmanager
+-	601	read: C101  write: C001
+-	680	confirmation: D200
